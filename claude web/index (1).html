@@ -39,7 +39,7 @@
       cursor: none;           /* custom cursor */
     }
 
-    /* ─── CUSTOM CURSOR ─────────────────────────────────── */
+    
     #cursor-dot, #cursor-ring {
       position: fixed;
       border-radius: 50%;
@@ -183,11 +183,15 @@
       position: relative;
       min-height: 100vh;
       display: flex; align-items: center;
-      padding: 120px 48px 60px;
+      padding: 120px 48px 140px;
       z-index: 1;
     }
 
-    .hero-content { max-width: 55%; }
+    .hero-content {
+      max-width: 55%;
+      position: relative;
+      z-index: 2;
+    }
 
     .tag-line {
       display: inline-flex; align-items: center; gap: 8px;
@@ -320,7 +324,9 @@
 
     /* Stats */
     .stats {
-      position: absolute; bottom: 48px; left: 48px;
+      position: absolute;
+      bottom: 48px;
+      left: 48px;
       display: flex; gap: 48px;
       opacity: 0;
       animation: fadeUp .7s 1.1s forwards;
@@ -964,7 +970,7 @@
 <!-- ── FOOTER ── -->
 <footer>
   <span class="logo-sm">AMJIU</span>
-  <span>© 2025 AMJ Designs. Crafted with intent.</span>
+  <span>© 2026 AMJ Designs. Crafted with intent.</span>
   <span>Web Design &amp; Development</span>
 </footer>
 
