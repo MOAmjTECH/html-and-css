@@ -145,6 +145,8 @@
     }
     nav a:hover { color: var(--cyan); }
     nav a:hover::before { border-color: var(--cyan); }
+    nav a.active { color: var(--cyan); }
+    nav a.active::before { border-color: var(--cyan); }
 
     .search-wrap {
       display: flex; align-items: center; gap: 0;
@@ -830,10 +832,10 @@
 
 <!-- ── MOBILE NAV DRAWER ── -->
 <div class="mobile-nav" id="mobileNav">
-  <a href="#" onclick="closeMobileNav()">About</a>
-  <a href="#" onclick="closeMobileNav()">Home</a>
-  <a href="#" onclick="closeMobileNav()">Products</a>
-  <a href="#" onclick="closeMobileNav()">Contact</a>
+  <a href="#">About</a>
+  <a href="#">Home</a>
+  <a href="#">Products</a>
+  <a href="#">Contact</a>
   <div class="mob-search">
     <input type="search" placeholder="Search…" />
     <button>Go</button>
@@ -1098,6 +1100,98 @@ function closeMobileNav() {
   document.body.style.overflow = '';
 }
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMobileNav(); });
+
+/* ── Navigation Functionality ── */
+function scrollToSection(sectionClass) {
+  const section = document.querySelector(sectionClass);
+  if (section) {
+    section.scrollIntoView({ behavior: 'smooth' });
+  }
+  // Close mobile nav if open
+  closeMobileNav();
+}
+
+function navigateHome() {
+  scrollToSection('.hero');
+}
+
+function navigateAbout() {
+  scrollToSection('.services');
+}
+
+function navigateProducts() {
+  scrollToSection('.services');
+}
+
+function navigateContact() {
+  scrollToSection('.login-section');
+}
+
+// Add navigation event listeners when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+  // Desktop navigation
+  const navLinks = document.querySelectorAll('nav a');
+  navLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      const text = this.textContent.toLowerCase();
+      if (text === 'home') navigateHome();
+      else if (text === 'about') navigateAbout();
+      else if (text === 'products') navigateProducts();
+      else if (text === 'contact') navigateContact();
+    });
+  });
+
+  // Mobile navigation
+  const mobileNavLinks = document.querySelectorAll('.mobile-nav a');
+  mobileNavLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      const text = this.textContent.toLowerCase();
+      if (text === 'home') navigateHome();
+      else if (text === 'about') navigateAbout();
+      else if (text === 'products') navigateProducts();
+      else if (text === 'contact') navigateContact();
+    });
+  });
+
+  // Highlight active navigation item based on scroll position
+  function updateActiveNav() {
+    const sections = ['.hero', '.services', '.login-section'];
+    const navItems = ['home', 'about', 'contact'];
+    
+    let current = '';
+    sections.forEach((section, index) => {
+      const element = document.querySelector(section);
+      if (element) {
+        const rect = element.getBoundingClientRect();
+        if (rect.top <= 100 && rect.bottom >= 100) {
+          current = navItems[index];
+        }
+      }
+    });
+
+    // Update desktop nav
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.textContent.toLowerCase() === current) {
+        link.classList.add('active');
+      }
+    });
+
+    // Update mobile nav
+    mobileNavLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.textContent.toLowerCase() === current) {
+        link.classList.add('active');
+      }
+    });
+  }
+
+  // Listen for scroll events to update active nav
+  window.addEventListener('scroll', updateActiveNav);
+  updateActiveNav(); // Initial call
+});
 </script>
 </body>
 </html>
